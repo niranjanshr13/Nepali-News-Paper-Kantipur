@@ -1,5 +1,5 @@
 #!/bin/bash
-########### Created By @niranjanshr13. Real Name Niranjan Shrestha.----------------------------##########
+########### Created By @niranjanshr13. Find him with @niranjanshr13. Niranjan Shrestha.----------------------------##########
 
 # convert Eastern Time to Nepal and initialize everything.
 dateinitial=$(date +%s)
