@@ -1,6 +1,5 @@
 #!/bin/bash
-########### Created By @niranjanshr13. Find him with @niranjanshr13. Niranjan Shrestha.----------------------------##########
-default_dir='/var/www/html/kantipur'
+default_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #rm $default_dir/*.jpg
 #rm $default_dir/*.pdf
 # convert Eastern Time to Nepal and initialize everything.
@@ -10,16 +9,19 @@ date_initial=$(date +%s)
 convert_to_nepal=$(expr $date_initial + 39600 - 28800)
 date=$(date -d @$convert_to_nepal +%Y-%m-%d)
 # removing every jpg for old jpg
-rm *.jpg
-# Creating kantipur pdf.
-echo $date
-curl http://epaper.ekantipur.com/kantipur/$date/1 | grep rel | grep .pdf | grep -o rel=".*" | sed 's/rel=//g' | sed 's/>//g' | sed 's/"//g' > $default_dir/kantipur.download
-aria2c -x 16 -s 16 -i $default_dir/kantipur.download -d "$default_dir"
-rm $default_dir/kantipur.download
+rm $default_dir/*.jpg
+rm $default_dir/*.pdf
+rm $default_dir/*.pdf*
+## Creating kantipur pdf.
+#echo $date
+#curl http://epaper.ekantipur.com/kantipur/$date/1 | grep rel | grep .pdf | grep -o rel=".*" | sed 's/rel=//g' | sed 's/>//g' | sed 's/"//g' > $default_dir/kantipur.download
+#aria2c -x 16 -s 16 -i $default_dir/kantipur.download -d "$default_dir"
+aria2c -x 16 -s 16 http://epaper.ekantipur.com/epaper/kantipur/$date/$date.pdf -d "$default_dir"
+#rm $default_dir/kantipur.download
 # Looping and renaming file into humanly readable number.
 for name in $(ls $default_dir/*.pdf)
 do
-    new_name="$(echo "$name" | cut -d'_' -f3)"
+    new_name="$(echo "$name" | cut -d"-" -f4)"
     mv $name $default_dir/$new_name
 done
 # convert pdf into jpg ----->> This is only for @niranjanshr13. You can remove code below --->>> only  the loop.
@@ -35,14 +37,15 @@ done
 #rm $default_dir/*.save
 ###
 echo '<body>' > $default_dir/kantipur.html
+echo "<center><h1>Kantipur Newspaper of $date </h1></center>" >> $default_dir/kantipur.html
 number_image=$(ls $default_dir | grep jpg | wc -l)
-for jpeg in $(seq $number_image)
+for jpeg in $(seq 0 $number_image)
 do
-echo "<img src=$jpeg.jpg style='width:1080px;height:1920px;'>" >> $default_dir/kantipur.html
+echo "<img src=$date-$jpeg.jpg style='width:1080px;height:1920px;'>" >> $default_dir/kantipur.html
 done
 echo '<audio controls autoplay>' >> $default_dir/kantipur.html
 echo 'Your browser does not support the audio element.' >> $default_dir/kantipur.html
 echo '</body>' >> $default_dir/kantipur.html
 rm *.pdf
-sleep 86400
+sleep 14400
 done
