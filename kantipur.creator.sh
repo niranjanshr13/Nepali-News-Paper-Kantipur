@@ -1,4 +1,5 @@
 #!/bin/bash
+#Created by @niranjanshr
 default_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #rm $default_dir/*.jpg
 #rm $default_dir/*.pdf
