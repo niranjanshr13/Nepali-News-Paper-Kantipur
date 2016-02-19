@@ -1,3 +1,4 @@
-# Nepali-News-Paper-Kantipur
-This script download kantipur newspaper which Nepal Newspaper. I builded for my dad but you guys can use it too..
-Have new idea about changing it. Then just do it and let me know if you idea abou it.
+Kantipur Newspaper converted "pdf" to "jpg" for mobile use.
+This script download Kantipur newspaper and their website and convert pdf into jpg and pu that jpg into html which meant to be compatible with any mobile and loop every 'x' seconds or in every day automatically just put that .sh file in 'cron' or '/etc/rc.local'
+I created for my dad whor reads newpspaper all the time. But you guys can use it too.
+Have new idea to fork it. Let me know about changing it. 
